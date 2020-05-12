@@ -1,9 +1,11 @@
 from rest_framework import serializers
 from profiles_api import models
 
+
 class HelloSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=10)
     age = serializers.CharField(max_length=10)
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     """Serializes a user profile object"""
@@ -26,3 +28,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
         )
 
         return user
+
+
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProfileFeedItem
+        fields = ('id', 'user_profile', 'status', 'created_on')
+        extra_kwargs = {'user_profile': {'read_only': True}}
+
